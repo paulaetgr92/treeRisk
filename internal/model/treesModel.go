@@ -4,20 +4,18 @@ import (
 	"time"
 )
 
-type TreeRequest struct {
+type Tree struct {
+	ID        int     `json:"id"`
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
-	Species   string  `json:"species"`
 	Height    float64 `json:"height"`
-	Diameter  float64 `json:"diameter"`
-	Age       int32   `json:"age"`
-	Health    string  `json:"health"`
+	Species   string  `json:"species"`
 }
 
 type TreeResponse struct {
 	Id        int64     `json:"id"`
 	Latitude  float64   `json:"latitude"`
-	Longitude float64   `json:"longitude" `
+	Longitude float64   `json:"longitude"` // ✅ CORRIGIDO
 	Species   string    `json:"species"`
 	Height    float64   `json:"height"`
 	Diameter  float64   `json:"diameter"`
@@ -33,26 +31,14 @@ type ListTreesByBoundingBoxRequest struct {
 	Longitude_2 float64 `json:"longitude_2"`
 }
 type ListTreesByBoundingBoxResponse struct {
-	Id        int64     `json:"id"`
-	Latitude  float64   `json:"latitude"`
-	Longitude float64   `json:"longitude"`
-	Species   string    `json:"species"`
-	Height    float64   `json:"height"`
-	Diameter  float64   `json:"diameter"`
-	Age       int32     `json:"age"`
-	Health    string    `json:"health"`
-	Status    string    `json:"status"`
-	CreatedAt time.Time `json:"created_at"`
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
+	Height    float64 `json:"height"`
 }
-
 type UpdateTreeRequest struct {
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 	Species   string  `json:"species"`
-	Height    float64 `json:"height"`
-	Diameter  float64 `json:"diameter"`
-	Age       int32   `json:"age"`
-	Health    string  `json:"health"`
 	ID        int64   `json:"id"`
 }
 type UpdateTreeResponse struct {

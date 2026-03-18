@@ -18,7 +18,7 @@ func NewTreeHandler(service *service.TreeService) *TreeHandler {
 }
 
 func (h *TreeHandler) CreateTreeHandler(c echo.Context) error {
-	var req model.TreeRequest
+	var req model.Tree
 
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
@@ -150,4 +150,12 @@ func (h *TreeHandler) ListPotentialRiskTree(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, tree)
+}
+
+func (h *TreeHandler) ListTreesHandler(c echo.Context) error {
+	trees, err := h.service.ListTreesService(c.Request().Context())
+	if err != nil {
+		return c.JSON(500, map[string]string{"error": err.Error()})
+	}
+	return c.JSON(200, trees)
 }

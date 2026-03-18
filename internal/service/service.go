@@ -6,7 +6,7 @@ import (
 )
 
 type TreeServiceInterface interface {
-	CreateTreeService(ctx context.Context, arg model.TreeRequest) (model.TreeResponse, error)
+	CreateTreeService(ctx context.Context, arg model.Tree) (model.TreeResponse, error)
 	GetTreeByIdService(ctx context.Context, id int64) (model.TreeResponse, error)
 	LisTreesByBoundingBoxService(ctx context.Context, arg model.ListTreesByBoundingBoxRequest) ([]model.ListTreesByBoundingBoxResponse, error)
 	UpdateTreeService(ctx context.Context, arg model.UpdateTreeRequest) (model.TreeResponse, error)
