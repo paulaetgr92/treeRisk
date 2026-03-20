@@ -5,7 +5,6 @@ import (
 )
 
 type Tree struct {
-	ID        int     `json:"id"`
 	Latitude  float64 `json:"latitude"`
 	Longitude float64 `json:"longitude"`
 	Height    float64 `json:"height"`

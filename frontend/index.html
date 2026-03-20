@@ -1,13 +1,54 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tree Risk 🌳</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Seu CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2>Tree Risk</h2>
+  <div class="links">
+    <span>Home</span>
+    <span>Mapa</span>
+  </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+  <h1>Cadastro de Árvores 🌳</h1>
+
+  <div class="card">
+    <input type="text" id="species" placeholder="Espécie da árvore">
+    <input type="number" id="height" placeholder="Altura (m)">
+    <button onclick="enableMapClick()">Cadastrar clicando no mapa</button>
+  </div>
+
+  <div class="map-wrapper">
+    <div id="map"></div>
+    <button class="expand-btn" onclick="toggleMap()">⛶ Expandir</button>
+  </div>
+
+  <p id="status"></p>
+
+  <!-- LISTA -->
+  <div id="tree-list"></div>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Script -->
+<script src="src/script.js "></script>
+
+</body>
 </html>
