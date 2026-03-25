@@ -9,6 +9,19 @@ import (
 	"time"
 )
 
+type Datatree struct {
+	ID        int64
+	Species   string
+	Height    sql.NullFloat64
+	Latitude  float64
+	Longitude float64
+	Diameter  sql.NullFloat64
+	Age       sql.NullInt32
+	Health    sql.NullString
+	Status    sql.NullString
+	CreatedAt sql.NullTime
+}
+
 type RiskAssessment struct {
 	ID           int64
 	TreeID       int32

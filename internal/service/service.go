@@ -61,3 +61,11 @@ type WeatherEventsServiceInterface interface {
 		region string,
 	) (model.WeatherEventResponse, error)
 }
+
+type TreeServiceExternalInterface interface {
+	GetTrees() ([]model.TreedData, error)
+}
+
+type GetNearbyTreesServiceInterface interface {
+	GetNearbyTrees(lat, lng, distance string) ([]model.TreedData, error)
+}

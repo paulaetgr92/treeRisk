@@ -1,6 +1,7 @@
 package handler
 
 import (
+	db "arvore/db/sqlc"
 	"arvore/internal/model"
 	"arvore/internal/service"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 
 type TreeHandler struct {
 	service *service.TreeService
+	db.Queries
 }
 
 func NewTreeHandler(service *service.TreeService) *TreeHandler {
@@ -157,5 +159,47 @@ func (h *TreeHandler) ListTreesHandler(c echo.Context) error {
 	if err != nil {
 		return c.JSON(500, map[string]string{"error": err.Error()})
 	}
+	return c.JSON(200, trees)
+}
+
+func (h *TreeHandler) GetTreesByLocation(c echo.Context) error {
+
+	latStr := c.QueryParam("lat")
+	lngStr := c.QueryParam("lng")
+
+	// 👉 se não vier filtro → retorna tudo
+	if latStr == "" || lngStr == "" {
+		trees, err := h.service.ListTreesService(c.Request().Context())
+		if err != nil {
+			return c.JSON(500, map[string]string{"error": err.Error()})
+		}
+		return c.JSON(200, trees)
+	}
+
+	lat, err := strconv.ParseFloat(latStr, 64)
+	if err != nil {
+		return c.JSON(400, map[string]string{"error": "lat inválido"})
+	}
+
+	lng, err := strconv.ParseFloat(lngStr, 64)
+	if err != nil {
+		return c.JSON(400, map[string]string{"error": "lng inválido"})
+	}
+
+	req := model.ListTreesByBoundingBoxRequest{
+		LatMin: lat - 0.01,
+		LatMax: lat + 0.01,
+		LngMin: lng - 0.01,
+		LngMax: lng + 0.01,
+	}
+
+	trees, err := h.service.LisTreesByBoundingBoxService(
+		c.Request().Context(),
+		req,
+	)
+	if err != nil {
+		return c.JSON(500, map[string]string{"error": err.Error()})
+	}
+
 	return c.JSON(200, trees)
 }

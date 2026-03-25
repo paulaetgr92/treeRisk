@@ -2,6 +2,7 @@ package repository
 
 import (
 	db "arvore/db/sqlc"
+	"arvore/internal/model"
 	"context"
 	"database/sql"
 )
@@ -37,4 +38,12 @@ type WeatherRepositoryInterface interface {
 	ListHighWindEvenytesRepository(ctx context.Context, windSpeed float64) ([]db.WeatherEvent, error)
 	ListHeavyRainEventsRepository(ctx context.Context, rainfallMm sql.NullFloat64) ([]db.WeatherEvent, error)
 	GetLatestSevereWeatherByRegionRepository(ctx context.Context, region string) (db.WeatherEvent, error)
+}
+
+type DataTreeRepositoryInterface interface {
+	GetTrees() ([]map[string]interface{}, error)
+}
+
+type TrendRepositoryInterface interface {
+	GetNearbyTrees(lat, lng, distance string) ([]model.TreedData, error)
 }

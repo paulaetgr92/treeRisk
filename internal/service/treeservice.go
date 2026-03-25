@@ -12,16 +12,14 @@ import (
 
 type TreeService struct {
 	treeRepo repository.TreeRepositoryInterface
-	riskRepo repository.RiskAssessmentRepositoryInterface
 }
 
 func NewTreeService(
 	treeRepo repository.TreeRepositoryInterface,
-	riskRepo repository.RiskAssessmentRepositoryInterface,
+
 ) *TreeService {
 	return &TreeService{
 		treeRepo: treeRepo,
-		riskRepo: riskRepo,
 	}
 }
 
@@ -84,19 +82,39 @@ func (s *TreeService) GetTreeByIdService(ctx context.Context, id int64) (model.T
 	return response, nil
 }
 
-func (s *TreeService) LisTreesByBoundingBoxService(ctx context.Context, arg model.ListTreesByBoundingBoxRequest) ([]model.ListTreesByBoundingBoxResponse, error) {
+func (s *TreeService) LisTreesByBoundingBoxService(
+	ctx context.Context,
+	arg model.ListTreesByBoundingBoxRequest,
+) ([]model.ListTreesByBoundingBoxResponse, error) {
 
+	// 🔥 converter model → sqlc params
 	params := db.ListTreesByBoundingBoxParams{
-		Latitude:    arg.Latitude,
-		Latitude_2:  arg.Latitude_2,
-		Longitude:   arg.Longitude,
-		Longitude_2: arg.Longitude_2,
+		Latitude:    arg.LatMin,
+		Latitude_2:  arg.LatMax,
+		Longitude:   arg.LngMin,
+		Longitude_2: arg.LngMax,
 	}
-	_, err := s.treeRepo.LisTreeByBoundingBoxRepository(ctx, params)
+
+	// 🔥 chama repository
+	trees, err := s.treeRepo.LisTreeByBoundingBoxRepository(ctx, params)
 	if err != nil {
-		return []model.ListTreesByBoundingBoxResponse{}, err
+		return nil, err
 	}
-	return []model.ListTreesByBoundingBoxResponse{}, nil
+
+	// 🔥 converter db → response
+	var response []model.ListTreesByBoundingBoxResponse
+
+	for _, t := range trees {
+		response = append(response, model.ListTreesByBoundingBoxResponse{
+			ID:        t.ID,
+			Species:   t.Species.String,
+			Height:    t.Height.Float64,
+			Latitude:  t.Latitude,
+			Longitude: t.Longitude,
+		})
+	}
+
+	return response, nil
 }
 
 func (s *TreeService) UpdateTreeService(ctx context.Context, arg model.UpdateTreeRequest) (model.TreeResponse, error) {

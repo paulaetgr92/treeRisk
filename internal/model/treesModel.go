@@ -22,17 +22,19 @@ type TreeResponse struct {
 	Health    string    `json:"health"`
 	CreatedAt time.Time `json:"created_at"`
 }
-
 type ListTreesByBoundingBoxRequest struct {
-	Latitude    float64 `json:"latitude"`
-	Latitude_2  float64 `json:"latitude_2"`
-	Longitude   float64 `json:"longitude"`
-	Longitude_2 float64 `json:"longitude_2"`
+	LatMin float64
+	LatMax float64
+	LngMin float64
+	LngMax float64
 }
+
 type ListTreesByBoundingBoxResponse struct {
-	Latitude  float64 `json:"latitude"`
-	Longitude float64 `json:"longitude"`
-	Height    float64 `json:"height"`
+	ID        int64
+	Species   string
+	Height    float64
+	Latitude  float64
+	Longitude float64
 }
 type UpdateTreeRequest struct {
 	Latitude  float64 `json:"latitude"`

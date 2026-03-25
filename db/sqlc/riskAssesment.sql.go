@@ -108,7 +108,7 @@ type ListHighRiskTreesRow struct {
 	Level     string
 }
 
-func (q *Queries) ListHighRiskTrees(ctx context.Context, id int32) ([]ListHighRiskTreesRow, error) {
+func (q *Queries) ListHighRiskTrees(ctx context.Context) ([]ListHighRiskTreesRow, error) {
 	rows, err := q.db.QueryContext(ctx, listHighRiskTrees)
 	if err != nil {
 		return nil, err
@@ -171,7 +171,7 @@ type ListMediumOrHighRiskTreesRow struct {
 	Level     string
 }
 
-func (q *Queries) ListMediumOrHighRiskTrees(ctx context.Context, id int32) ([]ListMediumOrHighRiskTreesRow, error) {
+func (q *Queries) ListMediumOrHighRiskTrees(ctx context.Context) ([]ListMediumOrHighRiskTreesRow, error) {
 	rows, err := q.db.QueryContext(ctx, listMediumOrHighRiskTrees)
 	if err != nil {
 		return nil, err
